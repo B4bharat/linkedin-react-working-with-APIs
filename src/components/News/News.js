@@ -10,16 +10,17 @@ class News extends Component {
   }
 
   componentDidMount() {
-    const url =
-      "http://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=bfef6454abcc4607acaf521ee9e53e13";
+    const url = "https://cat-fact.herokuapp.com/facts";
 
-    fetch(url)
+    fetch(url, {
+      method: "GET"
+    })
       .then((response) => {
         return response.json();
       })
       .then((data) => {
         this.setState({
-          news: data.articles
+          news: data.all
         });
       })
       .catch((err) => {
@@ -28,8 +29,8 @@ class News extends Component {
   }
 
   renderItems() {
-    return this.props.items.map((item) => {
-      <NewSingle key={item.id} item={item} />;
+    return this.state.news.map((item) => {
+      return <NewSingle key={item._id} item={item} />;
     });
   }
 
