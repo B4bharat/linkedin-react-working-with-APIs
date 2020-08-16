@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import axios from "axios";
 import SingleSide from "./SingleSide";
+import Error from "./Error";
 
 class SideNews extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sidenews: []
+      sidenews: [],
+      error: false
     };
   }
 
@@ -23,13 +25,19 @@ class SideNews extends Component {
           sidenews: response.data.results
         });
       })
-      .catch((error) => console.log(error));
+      .catch((err) => {
+        this.setState({ error: true });
+      });
   }
 
   renderItems() {
-    return this.state.sidenews.map((item) => {
-      return <SingleSide key={item.id} item={item} />;
-    });
+    if (!this.state.error) {
+      return this.state.sidenews.map((item) => {
+        return <SingleSide key={item.id} item={item} />;
+      });
+    } else {
+      return <Error />;
+    }
   }
 
   render() {

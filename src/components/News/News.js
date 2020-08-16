@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import NewSingle from "./NewSingle";
+import Error from "./Error";
 
 class News extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      news: []
+      news: [],
+      error: false
     };
   }
 
@@ -26,14 +28,18 @@ class News extends Component {
         });
       })
       .catch((err) => {
-        console.log(err);
+        this.setState({ error: true });
       });
   }
 
   renderItems() {
-    return this.state.news.map((item) => {
-      return <NewSingle key={item.id} item={item} />;
-    });
+    if (!this.state.error) {
+      return this.state.news.map((item) => {
+        return <NewSingle key={item.id} item={item} />;
+      });
+    } else {
+      return <Error />;
+    }
   }
 
   render() {
