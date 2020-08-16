@@ -10,8 +10,9 @@ class News extends Component {
   }
 
   componentDidMount() {
-    const url =
-      "https://api.nytimes.com/svc/mostpopular/v2/emailed/7.json?api-key=vAu0Y3eYif1FNFIbQi5GrbSGOGnO02wf";
+    const { type, period } = this.props;
+
+    const url = `https://api.nytimes.com/svc/mostpopular/v2/${type}/${period}.json?api-key=vAu0Y3eYif1FNFIbQi5GrbSGOGnO02wf`;
 
     fetch(url, {
       method: "GET"
