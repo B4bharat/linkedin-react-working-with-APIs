@@ -10,7 +10,8 @@ class News extends Component {
   }
 
   componentDidMount() {
-    const url = "https://cat-fact.herokuapp.com/facts";
+    const url =
+      "https://api.nytimes.com/svc/mostpopular/v2/emailed/7.json?api-key=vAu0Y3eYif1FNFIbQi5GrbSGOGnO02wf";
 
     fetch(url, {
       method: "GET"
@@ -20,7 +21,7 @@ class News extends Component {
       })
       .then((data) => {
         this.setState({
-          news: data.all
+          news: data.results
         });
       })
       .catch((err) => {
@@ -30,12 +31,12 @@ class News extends Component {
 
   renderItems() {
     return this.state.news.map((item) => {
-      return <NewSingle key={item._id} item={item} />;
+      return <NewSingle key={item.id} item={item} />;
     });
   }
 
   render() {
-    return <ul>{this.renderItems()}</ul>;
+    return <div className="row">{this.renderItems()}</div>;
   }
 }
 
